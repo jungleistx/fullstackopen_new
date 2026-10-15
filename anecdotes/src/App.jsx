@@ -1,8 +1,8 @@
+import AnecdoteList from "./components/AnecdoteList"
 import { useAnecdoteActions, useAnecdotes } from "./store"
 
 
 const App = () => {
-  const anecdotes = useAnecdotes()
   const { vote, addAnecdote } = useAnecdoteActions()
 
   const createAnecdote = (e) => {
@@ -18,15 +18,8 @@ const App = () => {
   return (
     <div>
       <h2>Anecdotes</h2>
-      {anecdotes.map((anecdote) => (
-        <div key={anecdote.id}>
-          <div>{anecdote.content}</div>
-          <div>
-            has {anecdote.votes}
-            <button onClick={() => vote(anecdote.id)}>vote</button>
-          </div>
-        </div>
-      ))}
+      <AnecdoteList />
+
 
       <h2>create new</h2>
       <form onSubmit={createAnecdote}>
