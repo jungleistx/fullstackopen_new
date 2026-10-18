@@ -2,22 +2,22 @@ import { useAnecdoteActions } from "../store"
 
 
 const AnecdoteForm = () => {
-  const { addAnecdote } = useAnecdoteActions()
+  const { add } = useAnecdoteActions()
 
-  const createAnecdote = (e) => {
+  const addAnecdote = async (e) => {
     e.preventDefault()
-    const content = e.target.anecdote.value
-    if (!content) {
+    const anecdote = e.target.anecdote.value
+    if (!anecdote) {
       return
     }
-    addAnecdote(content)
+    await add(anecdote)
     e.target.reset()
   }
 
   return (
     <>
       <h2>create new</h2>
-      <form onSubmit={createAnecdote}>
+      <form onSubmit={addAnecdote}>
         <div>
           <input data-testid="new" name="anecdote"/>
         </div>
