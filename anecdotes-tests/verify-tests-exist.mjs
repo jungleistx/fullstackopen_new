@@ -19,10 +19,10 @@ const findTestFiles = (dir) => {
   return found
 }
 
-const testFiles = findTestFiles(join(__dirname, "..", "anecdotes", "src"))
+const testFiles = findTestFiles(join(__dirname, ".", "tests"))
 
 if (testFiles.length === 0) {
-  console.error("No test files found under anecdotes/src")
+  console.error("No test files found under /tests")
   process.exit(1)
 }
 
