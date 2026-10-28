@@ -21,11 +21,16 @@ beforeEach(() => {
   vi.clearAllMocks()
 })
 
+const mockAnecdotes = [
+  { id: 1, votes: 1, content: 'first' },
+  { id: 2, votes: 3, content: 'second' },
+  { id: 3, votes: 2, content: 'third' }
+]
 
 describe('useAnecdotes', () => {
   it('initialize loads anecdotes from service', async () => {
-    const mockAnecdotes = [{ id: 1, votes: 0, content: 'test' }]
-    anecdoteService.getAll.mockResolvedValue(mockAnecdotes)
+    const mockAnecdote = [{ id: 1, votes: 0, content: 'test' }]
+    anecdoteService.getAll.mockResolvedValue(mockAnecdote)
 
     const { result } = renderHook(() => useAnecdoteActions())
 
@@ -34,15 +39,11 @@ describe('useAnecdotes', () => {
     })
 
     const { result: anecdotesResult } = renderHook(() => useAnecdotes())
-    expect(anecdotesResult.current).toEqual(mockAnecdotes)
+    expect(anecdotesResult.current).toEqual(mockAnecdote)
   })
 
 
   it('anecdots are sorted by votes when loaded', async () => {
-    const mockAnecdotes = [
-      { id: 1, votes: 1, content: 'first' },
-      { id: 2, votes: 3, content: 'second' }
-    ]
     anecdoteService.getAll.mockResolvedValue(mockAnecdotes)
 
     const { result } = renderHook(() => useAnecdoteActions())
@@ -53,7 +54,28 @@ describe('useAnecdotes', () => {
 
     const { result: anecdotesResult } = renderHook(() => useAnecdotes())
     expect(anecdotesResult.current).toEqual([
-      mockAnecdotes[1], mockAnecdotes[0]
+      mockAnecdotes[1], mockAnecdotes[2], mockAnecdotes[0]
+    ])
+  })
+
+
+  it('filter works correctly', async () => {
+    anecdoteService.getAll.mockResolvedValue(mockAnecdotes)
+
+    const { result } = renderHook(() => useAnecdoteActions())
+
+    await act(async () => {
+      await result.current.initialize()
+    })
+
+    const { result: actions } = renderHook(() => useAnecdoteActions())
+    act(() => {
+      actions.current.setFilter('ir')
+    })
+
+    const { result: anecdotesResult } = renderHook(() => useAnecdotes())
+    expect(anecdotesResult.current).toEqual([
+      mockAnecdotes[2], mockAnecdotes[0]
     ])
   })
 })
