@@ -68,9 +68,8 @@ describe('useAnecdotes', () => {
       await result.current.initialize()
     })
 
-    const { result: actions } = renderHook(() => useAnecdoteActions())
     act(() => {
-      actions.current.setFilter('ir')
+      result.current.setFilter('ir')
     })
 
     const { result: anecdotesResult } = renderHook(() => useAnecdotes())
