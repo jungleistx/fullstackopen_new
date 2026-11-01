@@ -68,4 +68,27 @@ describe('useAnecdotes', () => {
       mockAnecdotes[2], mockAnecdotes[0]
     ])
   })
+
+
+  it('voting increases votes', async () => {
+    const mockAnecdote = { id: 1, votes: 0, content: 'test' }
+
+    useAnecdoteStore.setState({ anecdotes: [mockAnecdote] })
+    anecdoteService.update.mockResolvedValue({ ...mockAnecdote, votes: 1 })
+
+    const { result } = renderHook(() => useAnecdoteActions())
+
+    await act(async () => {
+      await result.current.vote(mockAnecdote.id)
+    })
+
+    expect(anecdoteService.update).toHaveBeenCalledWith(1, {
+      ...mockAnecdote, votes: 1
+    })
+
+    const { result: anecdotesResult } = renderHook(() => useAnecdotes())
+    expect(anecdotesResult.current).toEqual([{
+      ...mockAnecdote, votes: 1
+    }])
+  })
 })
