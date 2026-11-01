@@ -55,13 +55,9 @@ describe('useAnecdotes', () => {
 
 
   it('filter works correctly', async () => {
-    anecdoteService.getAll.mockResolvedValue(mockAnecdotes)
+    useAnecdoteStore.setState({ anecdotes: mockAnecdotes })
 
     const { result } = renderHook(() => useAnecdoteActions())
-
-    await act(async () => {
-      await result.current.initialize()
-    })
 
     act(() => {
       result.current.setFilter('ir')
