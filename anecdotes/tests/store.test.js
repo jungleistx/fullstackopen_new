@@ -21,13 +21,14 @@ beforeEach(() => {
   vi.clearAllMocks()
 })
 
-const mockAnecdotes = [
-  { id: 1, votes: 1, content: 'first' },
-  { id: 2, votes: 3, content: 'second' },
-  { id: 3, votes: 2, content: 'third' }
-]
 
 describe('useAnecdotes', () => {
+  const mockAnecdotes = [
+    { id: 1, votes: 1, content: 'first' },
+    { id: 2, votes: 3, content: 'second' },
+    { id: 3, votes: 2, content: 'third' }
+  ]
+
   it('initialize loads anecdotes from service', async () => {
     const mockAnecdote = [{ id: 1, votes: 0, content: 'test' }]
     anecdoteService.getAll.mockResolvedValue(mockAnecdote)
@@ -44,13 +45,7 @@ describe('useAnecdotes', () => {
 
 
   it('anecdots are sorted by votes when loaded', async () => {
-    anecdoteService.getAll.mockResolvedValue(mockAnecdotes)
-
-    const { result } = renderHook(() => useAnecdoteActions())
-
-    await act(async () => {
-      await result.current.initialize()
-    })
+    useAnecdoteStore.setState({ anecdotes: mockAnecdotes })
 
     const { result: anecdotesResult } = renderHook(() => useAnecdotes())
     expect(anecdotesResult.current).toEqual([
