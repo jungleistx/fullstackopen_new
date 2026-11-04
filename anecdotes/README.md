@@ -1,7 +1,9 @@
 ### <ins> anecdotes </ins>
+- anecdotes excercise using Zustand-library
 - backend locally in db.json
   - used `json-server`
 
+---
 
 #### <ins>How to run</ins>
 - frontend and backend both run in separate terminals
@@ -12,3 +14,6 @@
 - `npm run dev`
 ##### browser
 - http://localhost:5173/
+
+#### <ins> tests
+- found in `../anecdotes-tests`
