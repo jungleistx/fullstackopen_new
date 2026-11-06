@@ -1,14 +1,17 @@
 import { useAnecdotes } from "../hooks/useAnecdotes"
+import useNotify from '../hooks/useNotify'
 
 
 const AnecdoteForm = () => {
   const { addAnecdote: addAnecdoteToServer } = useAnecdotes()
+  const { notify } = useNotify()
 
   const onCreate = (event) => {
     event.preventDefault()
     const content = event.target.anecdote.value
     event.target.reset()
     addAnecdoteToServer(content)
+    notify(`anecdote ${content} created`)
   }
 
   return (
