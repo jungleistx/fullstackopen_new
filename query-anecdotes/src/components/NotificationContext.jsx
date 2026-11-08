@@ -1,11 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 
-const NotifyContext = createContext()
+const NotificationContext = createContext()
 
-export default NotifyContext
+export default NotificationContext
 
 
-export const NotifyContextProvider = (props) => {
+export const NotificationContextProvider = (props) => {
   const [message, setMessage] = useState('')
 
   useEffect(() => {
@@ -16,8 +16,8 @@ export const NotifyContextProvider = (props) => {
   }, [message])
 
   return (
-    <NotifyContext.Provider value={{ message, notify: setMessage }}>
+    <NotificationContext.Provider value={{ message, notify: setMessage }}>
       {props.children}
-    </NotifyContext.Provider>
+    </NotificationContext.Provider>
   )
 }
