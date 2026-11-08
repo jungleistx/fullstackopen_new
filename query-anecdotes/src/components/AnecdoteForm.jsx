@@ -11,7 +11,7 @@ const AnecdoteForm = () => {
     const content = event.target.anecdote.value
     event.target.reset()
     addAnecdoteToServer(content)
-    notify(`anecdote ${content} created`)
+    notify(`anecdote '${content}' created`)
   }
 
   return (
