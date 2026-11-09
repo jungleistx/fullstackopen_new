@@ -17,10 +17,16 @@ export const createAnecdote = async (newAnecdote) => {
     body: JSON.stringify(newAnecdote)
   }
 
-  const response = await fetch(baseUrl, options)
+  let response
+  try {
+    response = await fetch(baseUrl, options)
+  } catch {
+    throw new Error('Server unavailable')
+  }
 
   if (!response.ok) {
-    throw new Error('Failed to create anecdote')
+    const body = await response.json()
+    throw new Error(body.error || 'Failed to create anecdote')
   }
 
   return await response.json()

@@ -36,7 +36,7 @@ export const useAnecdotes = () => {
     addAnecdote: (content) => newAnecdoteMutation.mutate({ content }, {
       onError: (error) => {
         console.error('Failed to create anecdote:', error)
-        notify('error adding new anecdote')
+        notify(error.message)
       }
     }),
     voteAnecdote: (anecdote) => updateAnecdoteMutation.mutate({
